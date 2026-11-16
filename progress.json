@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "fields": ["bad","ok","streak","weak","t"],
+  "note": "words 內每個字是一個陣列，依 fields 順序：bad=累計答錯, ok=累計答對, streak=目前連對, weak=1是不熟, t=最後更新時間(Unix分鐘)",
+  "updated": "",
+  "words": {}
+}
