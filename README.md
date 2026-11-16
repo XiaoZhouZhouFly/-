@@ -7,17 +7,32 @@
 | 檔案 | 用途 | 誰會改 |
 |---|---|---|
 | `index.html` | 練習畫面與全部程式 | 只有明確要求改功能或介面時才動 |
+| `manifest.webmanifest` | PWA 設定（名稱、圖示、顯示方式） | 改 App 名稱或顏色時 |
+| `sw.js` | 離線快取（Service Worker） | 增減要快取的檔案時 |
+| `favicon.svg`、`favicon-32.png` | 瀏覽器分頁圖示 | 換圖示時 |
+| `icon-192.png`、`icon-512.png`、`icon-maskable-512.png`、`apple-touch-icon.png` | 安裝到手機桌面用的圖示 | 換圖示時 |
 | `words.json` | 單字本身 | 使用者、AI（批次新增、修改、刪除） |
 | `progress.json` | 每個字的答對／答錯紀錄與「不熟」標記 | 由網頁匯出產生，通常不要手動改 |
 | `README.md` | 本說明 | 規則有變時更新 |
 
 ## 部署
 
-1. 把四個檔案放進 repo 根目錄。
+1. 把本說明「檔案」表裡列的所有檔案放進 repo 根目錄。
 2. Settings → Pages → Source 選 `Deploy from a branch`，Branch 選 `main`、資料夾選 `/ (root)`。
 3. 之後開啟 `https://<帳號>.github.io/<repo 名稱>/`。
 
 網頁用 `fetch` 讀取 JSON，所以**直接用檔案開啟（file://）會讀不到單字**，要用 Pages 網址或本機伺服器。
+
+## 安裝到手機桌面（PWA）
+
+網頁已設定為 PWA，用瀏覽器內建的「加入主畫面／安裝應用程式」功能即可，不需要網頁上的按鈕。
+
+- 需要 **https**（GitHub Pages 本來就是）。
+- 安裝後以全螢幕獨立視窗開啟，沒有網址列；畫面右上角「匯出」頁裡有「重新載入最新資料」按鈕可代替下拉重新整理。
+- **離線也能練習**：`sw.js` 採「網路優先」，有連線時一定拿到最新的 `words.json`、`progress.json` 與頁面；沒網路或網路超過 3 秒沒回應時，改用上次的快取。
+- 圖示是原創的單字卡＋字母 A，主色 `#2f6194`。`icon-maskable-512.png` 是滿版圖，給 Android 自適應圖示裁切用，內容都在中央安全區內。
+- 若新增了要離線使用的檔案，把檔名加到 `sw.js` 的 `SHELL` 陣列；想強制清掉所有人的舊快取時，把 `CACHE` 的版本號（`vocab-v1`）加一。
+- 所有路徑都用相對路徑（`./`），所以放在 `https://<帳號>.github.io/<repo 名稱>/` 這種子路徑也能正常運作。
 
 ## words.json 格式
 
